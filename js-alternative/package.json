@@ -1,0 +1,17 @@
+{
+  "name": "adventofcode-2024-c",
+  "version": "1.0.0",
+  "description": "This year, I do it in C. Plain old C, No lib. The idea is to learn C.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
