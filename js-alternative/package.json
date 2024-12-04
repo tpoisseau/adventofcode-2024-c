@@ -11,10 +11,16 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^22.10.1",
+    "eslint": "^9.16.0",
+    "eslint-config-zakodium": "^14.0.0",
+    "prettier": "^3.4.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   },
   "volta": {
     "node": "22.11.0"
+  },
+  "dependencies": {
+    "ml-matrix": "^6.12.0"
   }
 }

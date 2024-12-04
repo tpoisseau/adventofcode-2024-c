@@ -1,18 +1,19 @@
-import { readFileSync } from "node:fs";
+import { readFileSync } from 'node:fs';
 
-const input = readFileSync("../inputs/03.txt", { encoding: "utf8" });
+const input = readFileSync('../inputs/03.txt', { encoding: 'utf8' });
 
-const matches = input.matchAll(/mul\((\d{1,3}),(\d{1,3})\)|do\(\)|don\'t\(\)/g);
+// eslint-disable-next-line prefer-named-capture-group
+const matches = input.matchAll(/mul\((\d{1,3}),(\d{1,3})\)|do\(\)|don't\(\)/g);
 
 let mul = true;
 let result = 0;
 for (const [match, left, right] of matches) {
-  if (match == "do()") {
+  if (match === 'do()') {
     mul = true;
     continue;
   }
 
-  if (match == "don't()") {
+  if (match === "don't()") {
     mul = false;
     continue;
   }
