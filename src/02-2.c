@@ -24,110 +24,78 @@ int main_02_2(void) {
   int i = 0;
   while (fgets(line, lineMax, pFile)) {
     char *_line = strtok(line, "\n");
-    size_t length = strlen(line);
+    size_t length = strlen(_line);
 
-    char increase_line[length + 1];
-    char decrease_line[length + 1];
-    strcpy(increase_line, _line);
-    strcpy(decrease_line, _line);
-
-    bool had_one_tolerance;
-    bool is_safe;
-    char *str_value;
-    int value;
-    int last_value;
-    int last_last_value;
-
-    had_one_tolerance = false;
-    is_safe = true;
-    had_one_tolerance = false;
-    str_value = strtok(increase_line, " ");
-    value = strtol(str_value, &end_ptr, 10);
-
-    printf("%d | %s ", i, str_value);
-
-    last_last_value = value;
-    last_value = value;
-    while (true) {
-      str_value = strtok(NULL, " ");
-      if (str_value == NULL)
-        break;
-
-      value = strtol(str_value, &end_ptr, 10);
-      int difference = value - last_value;
-
-      printf("%i %s ", difference, str_value);
-
-      bool invalid_tolerance = difference < 1 || difference > 3;
-      if (had_one_tolerance && invalid_tolerance) {
-        is_safe = false;
-        printf("unsafe incr ");
-        break;
-      }
-
-      if (invalid_tolerance) {
-        difference = value - last_last_value;
-        invalid_tolerance = difference < 1 || difference > 3;
-
-        if (invalid_tolerance) {
-            had_one_tolerance = true;
-            printf("tolerance ");
-            continue;
-        }
-      }
-
-      last_last_value = last_value;
-      last_value = value;
+    int cells[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+    int i = 0;
+    for (char *str_value = strtok(_line, " "); str_value != NULL;
+         str_value = strtok(NULL, " ")) {
+      int value = strtol(str_value, &end_ptr, 10);
+      cells[i++] = value;
     }
 
-    if (is_safe) {
-      printf("safe incr\n");
+    bool is_safe = false;
+
+    for (int i = 0; i < 8; i++) {
+      int increase_cells[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+      int decrease_cells[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+      for (int ii = 0; ii < 8; ii++) {
+        increase_cells[ii] = cells[ii];
+        decrease_cells[ii] = cells[ii];
+      }
+
+      for (int ii = i, jj = i + 1; jj < 8; ii++, jj++) {
+        increase_cells[ii] = increase_cells[jj];
+        decrease_cells[ii] = decrease_cells[jj];
+      }
+      increase_cells[7] = 0;
+      decrease_cells[7] = 0;
+
+      bool is_safe_increase = true;
+      for (int jj = 0, ii = 1; ii < 8; ii++, jj++) {
+        int value = increase_cells[ii];
+        if (value == 0)
+          break;
+        int prev_value = increase_cells[jj];
+
+        int difference = value - prev_value;
+        if (difference >= 1 && difference <= 3)
+          continue;
+
+        is_safe_increase = false;
+        break;
+      }
+
+      if (is_safe_increase) {
+        is_safe = true;
+        break;
+      }
+
+      bool is_safe_decrease = true;
+      for (int jj = 0, ii = 1; ii < 8; ii++, jj++) {
+        int value = decrease_cells[ii];
+        if (value == 0)
+          break;
+        int prev_value = decrease_cells[jj];
+
+        int difference = value - prev_value;
+        if (difference >= -3 && difference <= -1)
+          continue;
+
+        is_safe_decrease = false;
+        break;
+      }
+
+      if (is_safe_decrease) {
+        is_safe = true;
+        break;
+      }
+    }
+
+    if (is_safe)
       result++;
-      i++;
-      continue;
-    }
 
-    had_one_tolerance = false;
-    is_safe = true;
-    had_one_tolerance = false;
-    str_value = strtok(decrease_line, " ");
-    value = strtol(str_value, &end_ptr, 10);
-
-    printf("| %s ", str_value);
-
-    last_value = value;
-    while (true) {
-      str_value = strtok(NULL, " ");
-      if (str_value == NULL)
-        break;
-
-      value = strtol(str_value, &end_ptr, 10);
-      int difference = value - last_value;
-
-      printf("%i %s ", difference, str_value);
-
-      bool invalid_tolerance = difference < -3 || difference > -1;
-      if (had_one_tolerance && invalid_tolerance) {
-        is_safe = false;
-        printf("unsafe decr ");
-        break;
-      }
-
-      if (invalid_tolerance) {
-        had_one_tolerance = true;
-        printf("tolerance ");
-        continue;
-      }
-
-      last_value = value;
-    }
-
-    if (is_safe) {
-      printf("safe decr");
-      result++;
-    }
-
-    printf("\n");
     i++;
   }
 

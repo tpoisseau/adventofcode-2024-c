@@ -1,4 +1,4 @@
-#include "02-2.h"
+#include "03-1.h"
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
     printf("%s\n", argv[i]);
   }
 
-  main_02_2();
+  return main_03_1();
 
-  return 0;
+  // return 0;
 }
