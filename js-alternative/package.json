@@ -18,7 +18,7 @@
     "typescript": "^5.7.2"
   },
   "volta": {
-    "node": "22.11.0"
+    "node": "23.3.0"
   },
   "dependencies": {
     "ml-matrix": "^6.12.0"
