@@ -9,26 +9,31 @@ CREATE TABLE IF NOT EXISTS rules (
     "right" INTEGER NOT NULL
 ) STRICT;
 CREATE INDEX IF NOT EXISTS rules_left_right_idx ON rules ("left", "right");
-`)
+`);
 
-const [rawRules, rawOrdering] = readFileSync('../inputs/05.txt', { encoding: 'utf8' }).split(
-  '\n\n',
-);
+const [rawRules, rawOrdering] = readFileSync('../inputs/05.txt', {
+  encoding: 'utf8',
+}).split('\n\n');
 
 {
-  const insertStatement = db.prepare('INSERT INTO rules ("left", "right") VALUES (?, ?)');
+  const insertStatement = db.prepare(
+    'INSERT INTO rules ("left", "right") VALUES (?, ?)',
+  );
   for (const rawRule of rawRules.split('\n')) {
     const [left, right] = rawRule.split('|').map(Number);
     insertStatement.run(left, right);
   }
 }
 
-const ordering = rawOrdering.split('\n')
+const ordering = rawOrdering
+  .split('\n')
   .values()
   .filter(Boolean)
-  .map(line => line.split(',').map(Number));
+  .map((line) => line.split(',').map(Number));
 
-const existsStatement = db.prepare(`SELECT "left", "right" FROM rules WHERE "left" = ? AND "right" = ?`);
+const existsStatement = db.prepare(
+  `SELECT "left", "right" FROM rules WHERE "left" = ? AND "right" = ?`,
+);
 let result = 0;
 order: for (const order of ordering) {
   console.log('Order:', order);

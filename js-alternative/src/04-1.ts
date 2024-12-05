@@ -16,7 +16,7 @@ const searchVectors = [
   [-1, -1],
   [-1, 0],
   [-1, 1],
-]
+];
 
 const search = 'XMAS';
 let occurrences = 0;

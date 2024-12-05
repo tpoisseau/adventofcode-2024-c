@@ -10,8 +10,8 @@ for await (const line of input.readLines({ encoding: 'utf8' })) {
   right.push(Number(b));
 }
 
-left.sort((a, b) => a-b);
-right.sort((a, b) => a-b);
+left.sort((a, b) => a - b);
+right.sort((a, b) => a - b);
 
 const distances: number[] = new Array(left.length);
 for (let i = 0; i < left.length; i++) {

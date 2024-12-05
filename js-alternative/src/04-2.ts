@@ -30,16 +30,18 @@ function isMOrS(char: string): 'M' | 'S' | false {
 }
 
 function isCrossMAS(input: string[], row: number, col: number) {
-  { // top right MAS - SAM
-    const nextLetter = isMOrS(input[row+1][col+1]);
+  {
+    // top right MAS - SAM
+    const nextLetter = isMOrS(input[row + 1][col + 1]);
     if (!nextLetter) return false;
-    if (input[row-1][col-1] !== nextLetter) return false;
+    if (input[row - 1][col - 1] !== nextLetter) return false;
   }
 
-  { // top left MAS - SAM
-    const nextLetter = isMOrS(input[row+1][col-1]);
+  {
+    // top left MAS - SAM
+    const nextLetter = isMOrS(input[row + 1][col - 1]);
     if (!nextLetter) return false;
-    if (input[row-1][col+1] !== nextLetter) return false;
+    if (input[row - 1][col + 1] !== nextLetter) return false;
   }
 
   return true;
